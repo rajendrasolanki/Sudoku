@@ -1,0 +1,13 @@
+<p>
+  sudoku works!
+</p>
+<form>
+    <table>
+        <tr *ngFor="let row of puzzle,let i= index">
+            <td *ngFor="let col of row,let j= index" [ngClass]="{rightBorder:((j+1)%3)==0,bottomBorder:((i+1)%3)==0}">
+                <input type="text" [value]="col">
+                
+            </td>
+        </tr>
+    </table>
+</form>

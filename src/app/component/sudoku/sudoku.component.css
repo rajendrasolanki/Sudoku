@@ -1,0 +1,23 @@
+form input{
+    height: 20px;
+    width: 20px;
+    text-align: center;
+}
+form input:hover{
+    background-color: #9999ff;
+}
+form input:checked{
+    background-color:#ccccff;
+}
+table{
+    border: 1px solid #000000;
+    border-spacing: 0px;
+    border-left: 2px solid #000000;
+    border-top: 2px solid #000000;
+}
+.rightBorder{
+    border-right: 1px #000000 solid;
+}
+.bottomBorder{
+    border-bottom: 1px #000000 solid;
+}
