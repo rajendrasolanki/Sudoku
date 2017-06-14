@@ -5,9 +5,9 @@
     <table>
         <tr *ngFor="let row of puzzle,let i= index">
             <td *ngFor="let col of row,let j= index" [ngClass]="{rightBorder:((j+1)%3)==0,bottomBorder:((i+1)%3)==0}">
-                <input type="text" [value]="col">
-                
+                <input type="text" [value]="col" maxlength="1" max="9" min="1">                
             </td>
         </tr>
     </table>
 </form>
+<button (click)="getPuzzle()">New Puzzle</button>

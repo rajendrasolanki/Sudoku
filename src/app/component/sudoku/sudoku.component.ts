@@ -13,9 +13,14 @@ export class SudokuComponent implements OnInit {
 
   ngOnInit() {
       this.getSudoku();
-      console.log(this.getSwapNum());
+      this.getPuzzle();
   }
-  
+  getPuzzle(){
+      this.swapRow();
+      this.swapCol();
+      this.swapRowGroup();
+      this.swapColGroup();
+  }
   getSudoku(){
      let k=1,n=1;
      for(let i=0;i<9;i++)
@@ -62,5 +67,74 @@ export class SudokuComponent implements OnInit {
       }
       return num;
   }
-  
+  getSwapGroupNum(){
+      let num=[];
+      num[0] = this.randomNum(0,2);
+      num[1] = this.randomNum(0,2);
+      while (num[0] == num[1])
+      {
+          num[0] = this.randomNum(0,2);
+          num[1] = this.randomNum(0,2);
+      }
+      let swapRowNo1,swapRowNo2;
+      if (num[0] ==2)
+      {
+          swapRowNo1=6;         
+      } else if (num[0] ==1){
+          swapRowNo1=3;
+      } else {
+          swapRowNo1=0;
+      }
+      if (num[1] ==2)
+      {
+          swapRowNo2=6;         
+      } else if (num[1] ==1){
+          swapRowNo2=3;
+      } else {
+          swapRowNo2=0;
+      }
+      return num = [swapRowNo1, swapRowNo2];
+  }
+  swapRow(){
+      let rowNo = this.getSwapNum();
+      for(let i=0;i<6;i+=2)
+      {
+          let temp = this.puzzle[rowNo[i]];
+          this.puzzle[rowNo[i]] = this.puzzle[rowNo[i+1]];
+          this.puzzle[rowNo[i+1]] = temp;
+      }
+  }
+  swapCol(){
+      let colNo = this.getSwapNum();
+      for(let i=0;i<6;i+=2)
+      {
+          for(let j=0;j<9;j++)
+          {
+              let temp = this.puzzle[j][colNo[i]];
+              this.puzzle[j][colNo[i]] = this.puzzle[j][colNo[i+1]];
+              this.puzzle[j][colNo[i+1]] = temp;              
+          }
+      }
+  }
+  swapRowGroup(){
+      let rowNo = this.getSwapGroupNum();
+      for(let i=0;i<3;i++)
+      {
+          let temp = this.puzzle[rowNo[0]+i];
+          this.puzzle[rowNo[0]+i] = this.puzzle[rowNo[1]+i];
+          this.puzzle[rowNo[1]+i] = temp;   
+      }
+  }
+  swapColGroup(){
+      let colNo = this.getSwapGroupNum();
+      for(let i=0;i<3;i++)
+      {
+          for(let j=0;j<9;j++)
+          {
+              let temp = this.puzzle[j][colNo[0]+i];
+              this.puzzle[j][colNo[0]+i] = this.puzzle[j][colNo[1]+i];
+              this.puzzle[j][colNo[1]+i] = temp;              
+          }   
+      }
+  }
 }
