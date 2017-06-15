@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GenerateSudokuService } from '../../service/generateService/generate-sudoku.service';
 
 @Component({
@@ -9,17 +10,23 @@ import { GenerateSudokuService } from '../../service/generateService/generate-su
 })
 export class SudokuComponent implements OnInit {
     private puzzle=[];
-    constructor() { }
+    private unSolvePuzzle=[];
+    private sudokuForm: FormGroup;
+    constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+      this.sudokuForm = this.fb.group({
+          level:[13]
+      });
       this.getSudoku();
-      this.getPuzzle();
+      this.changeLevel();
   }
-  getPuzzle(){
+  getPuzzle(n){
       this.swapRow();
       this.swapCol();
       this.swapRowGroup();
       this.swapColGroup();
+      this.getUnSolvePuzzle(n);
   }
   getSudoku(){
      let k=1,n=1;
@@ -136,5 +143,81 @@ export class SudokuComponent implements OnInit {
               this.puzzle[j][colNo[1]+i] = temp;              
           }   
       }
+  }
+  getFillNum(n){
+      let num=[];
+      while (num.length!=n)
+      {              
+        for (let i = num.length; i<n;i++)
+        {
+            num[i] = this.randomNum(0,39)
+        }
+        num = num.filter(function(elem,index,self){
+            return index == self.indexOf(elem);
+        });
+      }
+      return num.sort(function (a, b) {return a-b;});
+  }
+  getUnSolvePuzzle(unFill){
+      for (let i = 0; i < this.puzzle.length;i++)
+      {
+          this.unSolvePuzzle[i] = this.puzzle[i].slice();
+      }
+      
+      let fillCell = this.getFillNum(unFill);
+      let count=0,fillNo=0;
+      for(let i=0;i<4;i++)
+      {
+          for(let j=0;j<=i;j++)
+          {
+              if (count == fillCell[fillNo])
+              {
+                  this.unSolvePuzzle[i][j]=null;
+                  fillNo++;
+              }
+              count++;
+          }
+      }
+      for(let i=4;i<9;i++)
+      {
+          for(let j=0;j<i;j++)
+          {
+              if (count == fillCell[fillNo])
+              {
+                  this.unSolvePuzzle[i][j]=null;
+                  fillNo++;
+              }
+              count++;
+          }
+      }
+      count = 0, fillNo = 0;
+      for(let i=8;i>4;i--)
+      {
+          for(let j=8;j>=i;j--)
+          {
+              if (count == fillCell[fillNo])
+              {
+                  this.unSolvePuzzle[i][j]=null;
+                  fillNo++;
+              }
+              count++;
+          }
+      }
+      for(let i=4;i>=0;i--)
+      {
+          for(let j=8;j>i;j--)
+          {
+              if (count == fillCell[fillNo])
+              {
+                  this.unSolvePuzzle[i][j]=null;
+                  fillNo++;
+              }
+              count++;
+          }
+      }      
+  }
+  changeLevel()
+  {
+      this.getPuzzle(this.sudokuForm.value.level);
   }
 }
