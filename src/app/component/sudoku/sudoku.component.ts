@@ -38,8 +38,7 @@ export class SudokuComponent implements OnInit {
              if(k<=9){
                  temp.push(k);
                  k++;
-             }
-             else{
+             } else {
                  k=1;
                  temp.push(k);
                  k++;
