@@ -35,7 +35,7 @@ export class SudokuComponent implements OnInit {
          k=n;
          let temp=[];
          for(let j=0;j<9;j++){
-             if(k<=9){
+             if( k <= 9 ){
                  temp.push(k);
                  k++;
              } else {
