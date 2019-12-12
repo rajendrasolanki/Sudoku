@@ -17,6 +17,6 @@ jobs:
     - name: Run a multi-line script
       run: |
         npm install
-        npm run build--prod
+        npm run build-prod
         echo Add other actions to build,
         echo test, and deploy your project.
