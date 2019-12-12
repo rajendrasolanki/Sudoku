@@ -13,7 +13,7 @@ jobs:
       run: echo Hello, world!
     - name: Run a multi-line script
       run: |
-        npm ci
-        npm run build--prod
+        npm install
+        npm run build-prod
         echo Add other actions to build,
         echo test, and deploy your project.
