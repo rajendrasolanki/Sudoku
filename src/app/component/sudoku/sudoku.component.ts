@@ -39,7 +39,7 @@ export class SudokuComponent implements OnInit {
                  temp.push(k);
                  k++;
              } else {
-                 k=1;
+                 k = 1;
                  temp.push(k);
                  k++;
              }
